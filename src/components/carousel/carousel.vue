@@ -86,6 +86,9 @@
                 validator (value) {
                     return value === 'auto' || Object.prototype.toString.call(value) === '[object Number]';
                 }
+            },
+            affixStatus: {
+                type: String
             }
         },
         data () {
@@ -311,6 +314,12 @@
 //                this.trackIndex = val;
                 this.updateTrackIndex(val);
                 this.setAutoplay();
+            },
+            affixStatus: function affixStatus() {
+                // 因为关闭 sider 的动画时间为 200ms 所以加个延时初始化，否则出错
+                setTimeout(() => {
+                    this.handleResize();
+                },200);
             }
         },
         mounted () {
