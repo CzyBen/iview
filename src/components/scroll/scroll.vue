@@ -1,8 +1,8 @@
 <template>
-    <div :class="wrapClasses" style="touch-action: none;">
+    <div :class="wrapClasses" style="touch-action: none;" :style="{height: wrapHeight}">
         <div
             :class="scrollContainerClasses"
-            :style="{height: height + 'px'}"
+            :style="{height: scrollContainerHeight}"
             @scroll="handleScroll"
             @wheel="onWheel"
             @touchstart="onPointerDown"
@@ -42,6 +42,9 @@
             height: {
                 type: [Number, String],
                 default: 300
+            },
+            heightPercent: {
+                type: String
             },
             onReachTop: {
                 type: Function
@@ -111,6 +114,12 @@
                 } else {
                     return this.loadingText;
                 }
+            },
+            scrollContainerHeight () {
+                return this.heightPercent != null ? this.heightPercent : this.height + 'px';
+            },
+            wrapHeight () {
+                return this.heightPercent != null ? this.heightPercent : '';
             },
         },
         methods: {
