@@ -1,5 +1,5 @@
 <template>
-    <span :class="classes">
+    <span :class="classes" :style="styles">
         <img :src="src" v-if="src" @error="handleError">
         <Icon :type="icon" :custom="customIcon" v-else-if="icon || customIcon"></Icon>
         <span ref="children" :class="[prefixCls + '-string']" :style="childrenStyle" v-else><slot></slot></span>
@@ -28,6 +28,9 @@
                 default () {
                     return !this.$IVIEW || this.$IVIEW.size === '' ? 'default' : this.$IVIEW.size;
                 }
+            },
+            sizePx: {
+                type: [Number, String]
             },
             src: {
                 type: String
@@ -59,6 +62,17 @@
                         [`${prefixCls}-icon`]: !!this.icon || !!this.customIcon
                     }
                 ];
+            },
+            styles () {
+                let style = {};
+                if(this.sizePx) {
+                    style = {
+                        height: this.sizePx + 'px',
+                        width: this.sizePx + 'px',
+                        'border-radius': '50%'
+                    };
+                }
+                return style;
             },
             childrenStyle () {
                 let style = {};
